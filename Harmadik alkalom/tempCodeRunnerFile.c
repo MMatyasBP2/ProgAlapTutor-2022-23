@@ -1,0 +1,1 @@
+ printf("%u was found at index of %u.\n", key, i + 1);
