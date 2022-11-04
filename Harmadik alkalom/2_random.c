@@ -1,6 +1,7 @@
+/*-1000 és 1000 közé eső véletlenszámokkal töltsön fel egy 20 elemű integer tömböt, majd végezze el
+az alábbi feladatokat:*/
 #include<stdio.h>
 #include<stdlib.h>
-#include<time.h>
 #include<stdbool.h>
 
 #define SIZE 20
@@ -9,37 +10,35 @@ int main()
 {
     int array[SIZE];
 
-    srand(time(NULL));
+    for (unsigned int i = 0; i < SIZE; i++)
+    {
+        array[i] = (rand() % (1000 - (-999)) + (-1000));
+    }
+
+    // Tömbök kiiratása
 
     for (unsigned int i = 0; i < SIZE; i++)
     {
-        array[i] = (rand() % (1000 - (-999)) + (-1000));    
+        printf("%d. item: %d\n", i + 1, array[i]);
     }
-    
-    printf("Index\tItem\n");
-    for (unsigned int i = 0; i < SIZE; i++)
-    {
-        printf("%d\t%d\n", i + 1, array[i]);
-    }
-    
-    // Kereses
+
+    /*Keresse meg az 500-at a tömbben, ha benne van!*/
 
     bool found = false;
-    const unsigned int key = 500;
+    int search = 500;
 
     for (unsigned int i = 0; i < SIZE; i++)
     {
-        if (key == array[i])
+        if (search == array[i])
         {
             found = true;
-            printf("%u was found at index of %u.\n", key, i + 1);
+            printf("%u was found at index %u.\n", search, i);
             break;
         }
     }
-
     if (!found)
     {
-       printf("%u was not found in the array!", key);
+        printf("%u is not in the array.\n", search);
     }
 
     return 0;

@@ -1,99 +1,104 @@
+/*Az EURO árfolyamát egy negyedéven keresztül hetente nyilvántartjuk (HUF / EUR). Írjon C
+programokat az alábbi kérdések megválaszolására.
+*/
+
 #include<stdio.h>
 #include<stdlib.h>
 #include<stdbool.h>
-#include<math.h>
-
-#define LIMIT 300.0
 
 int main()
 {
-    double euros[] = { 289.5, 292.6, 290.2, 295.5, 300.4, 302.3, 302.5, 303.3, 303.5, 299.9 };
-    int size = sizeof(euros) / sizeof(double);
+    /*Hányszor volt a negyedévben 300 Ft alatt az árfolyam értéke? A tömböt inicializálja*/
+    
+    int db = 0;
 
-    // Count
+        double euro[] = {289.5, 292.6, 290.2, 295.5, 300.4, 302.3, 302.5, 303.3, 303.5, 299.9};
+        int size = sizeof(euro) / sizeof(double);
+        double limit = 300.0;
 
-    int count = 0;
-    printf("\nHUF/EURO arfolyamok:\n");
-    for (unsigned int i = 0; i < size; i++)
-    {
-        printf("%d. ertek: %.2lf\n", i + 1, euros[i]);
-        if (euros[i] < LIMIT)
-        {
-            count++;
+        printf("\nHUF/EURO arfolyamok:\n");
+        for (unsigned int i = 0; i < size; i++) {
+            printf("%d. ertek: %.2lf\n", i + 1, euro[i]);
+        //Feltételt kielégítő elemek megszámlálása
+            if (euro[i] < limit)
+            {
+                db++;
+            }
         }
-    }
-    
-    printf("\nAz arfolyam erteke %d-szor volt %.2lf alatt.\n", count, LIMIT);
-    
-    // Monotone
+
+        printf("\nAz arfolyam erteke %d-szor volt %.2f alatt.\n", db, limit);
+
+    /*Monoton nőtt-e az árfolyam a negyedév során? Alkalmazzon ellenőrzött adatbeolvasást.
+    A válasz kiírását feltételes operátorral valósítsa meg. */
 
     bool is_monotone = true;
-    for (unsigned int i = 1; i < size; i++)
-    {
-        if (euros[i - 1] > euros[i])
+        for (unsigned int i = 1; i < size; i++)
+        {
+        if (euro[i - 1] > euro[i])
         {
             is_monotone = false;
             break;
         }
     }
-    
-    printf("A sor %s.\n\n", is_monotone ? "monoton novekvo" : "nem monoton");
 
-    // Minimum, maximum
+    printf("A sor %s.\n", is_monotone ? "monoton növekvö" : "nem monoton");       
 
-    int min = euros[0], max = euros[0];
+    /* Melyik héten volt a legmagasabb, és melyiken a legalacsonyabb az árfolyam és hol?*/
 
+    int min = euro[0], max = euro[0];
     for (unsigned int i = 1; i < size; i++)
     {
-        if (euros[i] < min)
+        if (euro[i] < min)
         {
-            min = euros[i];
+            min = euro[i];
         }
-        if (euros[i] > max)
+        if (euro[i] > max)
         {
-            max = euros[i];
+            max = euro[i];
         }
+        
     }
-
-    printf("Minimum ertek = %d\n", min);
-    printf("Maximum ertek = %d\n\n", max);
     
-    // Minimum ertek, maximum ertek
+    printf("Minimum ertek: %d\n", min);
+    printf("Maximum ertek: %d\n\n", max);
 
     int min_index = 0, max_index = 0;
-
     for (unsigned int i = 1; i < size; i++)
     {
-        if (euros[i] < euros[min_index])
+        if (euro[i] < euro[min_index])
         {
             min_index = i;
         }
-        if (euros[i] > euros[max_index])
+        if (euro[i] > euro[max_index])
         {
             max_index = i;
         }
     }
     
-    printf("Minimum hely ertek = %d\n", min_index);
-    printf("Maximum hely ertek = %d\n\n", max_index);
+    printf("Minimum ertek helye: %d\n", min_index);
+    printf("Maximum ertek helye: %d\n\n", max_index);
 
-    // Átlag
+    /*Mennyi az adott negyedévre vonatkozó átlagos árfolyam érték? 
+    Előjelhelyesen írja ki, hogy az egyes adatok mennyivel térnek el az átlagtól. 
+    Ezt a feladatot pointer használatával is oldja meg.*/
 
     float avg = 0;
     for (unsigned int i = 0; i < size; i++)
     {
-        avg += euros[i];
+        avg += euro[i];
     }
-    avg /= size;
-    printf("Atlag kerekitve = %f\n\n", ceil(avg));
 
+    avg /= size;
+    printf("Atlag: %.2lf\n\n", avg);
+    
     // Átlagtól való eltérés
 
     printf("Sorszam\tAtlag\tAtlagtol valo elteres\n");
     for (unsigned int i = 0; i < size; i++)
     {
-        printf("%d.\t%.2f\t%.2f\n", i + 1, euros[i], euros[i] - avg);
+        printf("%d.\t%.2lf\t%.2lf\n", i + 1, euro[i], euro[i] - avg);
     }
+    
 
     return 0;
 }
