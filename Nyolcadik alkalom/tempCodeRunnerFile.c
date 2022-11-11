@@ -1,0 +1,1 @@
+  return emp.salary / (double)emp.hours;
