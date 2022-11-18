@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "limits": "c"
-    }
+        "limits": "c",
+        "zh.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
