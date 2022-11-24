@@ -35,13 +35,13 @@ unsigned int getnewsize(double *array)
 
 void choose(double *array, double *newarray)
 {
+    unsigned int j = 0;
     for (unsigned int i = 0; i < SIZE; i++)
     {
         if (array[i] >= 100)
         {
-            // Probléma: Mindig az 'i'-edik helyre fogja szúrni a jó elemet. Mi a megoldás?
-
-            newarray[i] = array[i];
+            newarray[j] = array[i];
+            j++;
         }
     }
 }
